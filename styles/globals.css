@@ -351,7 +351,7 @@ span.text-red {
   padding: 20px;
 }
 .product .cart-product-image {
-  width: 180px;
+  width: 150px;
   height: 150px;
   border-radius: 15px;
   background-color: #ebebeb;
@@ -531,19 +531,12 @@ span.text-red {
 }
 .quantity-desc span {
   font-size: 16px;
-  padding: 6px 12px;
+  padding: 0 10px;
   cursor: pointer;
 }
-.quantity-desc .minus {
-  border-right: 1px solid gray;
-  color: #f02d34;
-}
+
 .quantity-desc .num {
-  border-right: 1px solid gray;
   font-size: 20px;
-}
-.quantity-desc .plus {
-  color: rgb(49, 168, 49);
 }
 
 .maylike-products-wrapper {
