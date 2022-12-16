@@ -5,8 +5,6 @@ import { FooterBanner } from "../components/FooterBanner";
 import { client } from "../library/client";
 
 const Home = ({ products, bannerData }) => {
-  const array = ["Porduct1 ", "Porduct2 ", "Porduct3 "];
-  console.log(products);
   return (
     <>
       <Banner bannerData={bannerData} />
@@ -21,7 +19,7 @@ const Home = ({ products, bannerData }) => {
           ))}
         </div>
       </div>
-      <FooterBanner footerBanner={bannerData && bannerData[0]}/>
+      <FooterBanner footerBanner={bannerData && bannerData[0]} />
     </>
   );
 };

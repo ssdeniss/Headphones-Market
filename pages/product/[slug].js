@@ -11,7 +11,7 @@ import { useStateContext } from "../../context/StateContext";
 import ImageViewer from "react-simple-image-viewer";
 
 const ProductDetails = ({ products, product }) => {
-  const { decQty, incQty, qty, onAdd } = useStateContext();
+  const { decQty, incQty, qty, onAdd, setShowCart } = useStateContext();
   const { image, name, details, price } = product;
   const [currentImage, setCurrentImage] = useState(0);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
@@ -27,9 +27,13 @@ const ProductDetails = ({ products, product }) => {
   };
   const [images, setImages] = useState([]);
   useEffect(() => {
-    image?.map((item, i) => setImages(urlFor(item)));
+    image?.map((item) => setImages(urlFor(item)));
   }, [image]);
-  console.log(image, images);
+
+  const handleBuyNow = () => {
+    onAdd(product, qty);
+    setShowCart(true);
+  };
   return (
     <div>
       <div
@@ -47,6 +51,7 @@ const ProductDetails = ({ products, product }) => {
           <div className="small-images-container">
             {image?.map((item, i) => (
               <img
+                key={item._id}
                 className={i === index ? "small-image x-image" : "small-image"}
                 onMouseEnter={() => setIndex(i)}
                 src={urlFor(item)}
@@ -124,7 +129,7 @@ const ProductDetails = ({ products, product }) => {
             >
               Add to cart
             </button>
-            <button className="buy-now" type="button">
+            <button className="buy-now" type="button" onClick={handleBuyNow}>
               Buy now
             </button>
           </div>
