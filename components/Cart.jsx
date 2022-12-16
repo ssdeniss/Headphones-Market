@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { toast } from "react-hot-toast";
 import {
   AiOutlineLeft,
   AiOutlineMinus,
@@ -10,6 +11,7 @@ import { IoMdTrash } from "react-icons/io";
 import { useStateContext } from "../context/StateContext";
 import { useClickOutside } from "../hooks/useClickOutside";
 import { urlFor } from "../library/client";
+import getStripe from "../library/getStripe";
 
 const Cart = () => {
   const {
@@ -24,6 +26,37 @@ const Cart = () => {
   const outside = useClickOutside(() => {
     setShowCart(false);
   });
+
+  const handleCheckout = async () => {
+    const stripe = await getStripe();
+    const response = await fetch("/api/payments/stripe", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cartItems),
+    });
+    if (response.statusCode === 500) return;
+    const data = await response.json();
+    toast.loading("Redirecting...", {
+      duration: 4000,
+      position: "top-right",
+      style: {
+        border: "1px solid #f02d34",
+        padding: "16px",
+      },
+      iconTheme: {
+        primary: "#f02d34",
+        secondary: "#FFFAEE",
+      },
+      ariaProps: {
+        role: "status",
+        "aria-live": "polite",
+      },
+    });
+    stripe.redirectToCheckout({ sessionId: data.id });
+    
+  };
   return (
     <div className="cart-wrapper">
       <div className="cart-container" ref={outside}>
@@ -126,7 +159,7 @@ const Cart = () => {
               <h3>${totalPrice} </h3>
             </div>
             <div className="btn-container">
-              <button className="btn" type="button">
+              <button className="btn" type="button" onClick={handleCheckout}>
                 Pay with stripe
               </button>
             </div>

@@ -72,12 +72,18 @@ export const StateContext = ({ children }) => {
       product.quantity = quantity;
       setCartItems([...cartItems, { ...product }]);
     }
-    // toast.success(`${qty} ${product.name} added to cart`);
-    <Toaster position="top-right">{`${qty} ${product.name} added to cart`}</Toaster>;
 
     toast.success(`${qty} ${product.name} added to cart`, {
       duration: 4000,
       position: "top-right",
+      style: {
+        border: "1px solid #f02d34",
+        padding: "16px",
+      },
+      iconTheme: {
+        primary: "#f02d34",
+        secondary: "#FFFAEE",
+      },
       ariaProps: {
         role: "status",
         "aria-live": "polite",
@@ -105,7 +111,10 @@ export const StateContext = ({ children }) => {
         cartItems,
         totalPrice,
         setShowCart,
+        setCartItems,
         totalQuantity,
+        setTotalPrice,
+        setTotalQuantity,
         toggleCartItemQuantity,
       }}
     >
